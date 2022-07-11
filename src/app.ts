@@ -1,4 +1,5 @@
 import express, {Request, Response, NextFunction} from 'express';
+import config from 'config'
 
 const app = express()
 app.use(express.json())
