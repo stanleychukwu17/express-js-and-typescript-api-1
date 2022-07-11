@@ -20,3 +20,12 @@ export async function createUserHandler(req: Request, res: Response) {
         return res.status(409).send(e.message);
     }
 }
+
+// we expect the user password and email
+export async function createUserSessionHandler(req: Request, res: Response) {
+    try {
+
+    } catch (e:any) {
+
+    }
+}
