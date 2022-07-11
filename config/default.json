@@ -1,0 +1,5 @@
+{
+    "port": 4000,
+    "host": "localhost",
+    "dbUri": "mongodb://localhost:27017/my_rest_api"
+}
