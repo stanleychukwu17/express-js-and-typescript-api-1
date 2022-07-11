@@ -19,6 +19,7 @@ type validatePasswordProps = {
     email: UsersDocument["email"]
     password: UsersDocument["password"] | string
 }
+
 export async function validatePassword({email,password}: validatePasswordProps) {
     const user = await Users.findOne({ email });
 

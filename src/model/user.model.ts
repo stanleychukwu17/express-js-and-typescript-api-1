@@ -40,7 +40,6 @@ UsersSchema.pre("save", async function (next) {
 // used to compare the user's password when a user wants to login
 UsersSchema.methods.comparePassword = async function (candidatePassword: string) {
     const user = this as UsersDocument
-
     return bcrypt.compare(candidatePassword, user.password).catch((e) => false)
 }
 
