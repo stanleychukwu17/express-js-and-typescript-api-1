@@ -1,6 +1,5 @@
 import logger from 'pino'
 import dayjs from 'dayjs'
-import { timeStamp } from 'console'
 
 const args = {
     pettyPrint: true,

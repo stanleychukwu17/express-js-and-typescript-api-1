@@ -28,7 +28,6 @@ UsersSchema.pre("save", async function (next) {
 
     // Random additional data
     const salt = await bcrypt.genSalt(config.get("saltWorkFactor"));
-
     const hash = await bcrypt.hashSync(user.password, salt);
 
     // Replace the password with the hash
