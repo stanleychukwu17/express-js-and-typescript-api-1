@@ -15,6 +15,7 @@ export async function findUser(query: FilterQuery<UsersDocument>) {
 }
 
 
+// the type defined for validating of passwords
 type validatePasswordProps = {
     email: UsersDocument["email"]
     password: UsersDocument["password"] | string
