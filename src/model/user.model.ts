@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import config from "config";
 
 // the interface definition for the schema
-export interface userDocument extends mongoose.Document {
+export interface UserDocument extends mongoose.Document {
     username: string
     email: string
     password: string
@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
 
 // this method will be used to compare the received password vs the existing password
 userSchema.methods.comparePassword = async function (receivedPassword: string) {
-    const user = this as userDocument
+    const user = this as UserDocument
     const check: boolean = await bcrypt.compare(user.password, receivedPassword)
 
     if (!check) { return false }
@@ -30,7 +30,7 @@ userSchema.methods.comparePassword = async function (receivedPassword: string) {
 
 // hashing the password before we save to our mongodb
 userSchema.pre("save", async function (next) {
-    const user = this as userDocument
+    const user = this as UserDocument
 
     // we only want to hash the password when it has not been modified or hashed
     if (!user.isModified("password")) return next();
@@ -47,5 +47,5 @@ userSchema.pre("save", async function (next) {
 })
 
 // exports the model
-const Users = mongoose.model<userDocument>('Users', userSchema);
+const Users = mongoose.model<UserDocument>('Users', userSchema);
 export default Users;

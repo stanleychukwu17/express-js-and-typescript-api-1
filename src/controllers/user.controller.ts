@@ -21,6 +21,7 @@ export async function registerUserHandler(req: Request, res: Response) {
 export async function loginUserHandler(req: Request, res: Response) {
     try {
         const login = await loginUserService(req.body)
+        return res.send('continue')
     } catch (err: any) {
         log.error(err.message);
         return res.status(401).send(err.message); // conflict statusCode = 409 maybe conflict is email or username
