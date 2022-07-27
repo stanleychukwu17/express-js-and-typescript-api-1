@@ -1,10 +1,10 @@
-import { DocumentDefinition, FilterQuery } from "mongoose";
+import { DocumentDefinition } from "mongoose";
 import bcrypt from "bcrypt";
 import { omit } from "lodash";
 import Users, {UserDocument} from "../model/user.model";
 import log from "../logger";
 
-
+// registers a new user
 export async function registerNewUserService (details: DocumentDefinition<UserDocument>) {
     try {
         return await Users.create(details);
