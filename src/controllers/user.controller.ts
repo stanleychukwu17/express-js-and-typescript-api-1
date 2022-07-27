@@ -20,7 +20,7 @@ export async function registerUserHandler(req: Request, res: Response) {
 // for user login
 export async function loginUserHandler(req: Request, res: Response) {
     try {
-        const login = await loginUserService(req.body)
+        const login = await loginUserService(req.body, req)
         return res.send('continue')
     } catch (err: any) {
         log.error(err.message);

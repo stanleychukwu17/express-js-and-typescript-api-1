@@ -1,8 +1,10 @@
+import {Request} from 'express'
 import { DocumentDefinition } from "mongoose";
 import bcrypt from "bcrypt";
 import { omit } from "lodash";
 import Users, {UserDocument} from "../model/user.model";
 import log from "../logger";
+import { createSession } from "./session.service";
 
 // registers a new user
 export async function registerNewUserService (details: DocumentDefinition<UserDocument>) {
@@ -22,13 +24,14 @@ type validateProps = {
 export async function validateUsernameAndPassword ({username, password}: validateProps) {
     try {
         const userDts = await Users.findOne({username})
+        let dUser:any;
 
         if (userDts && userDts.email.length > 0) {
             const {password: savedPassword} = userDts
             const passMatch = await bcrypt.compare(password, savedPassword)
 
             if (passMatch) {
-                const dUser = omit(userDts.toJSON(), 'password')
+                dUser = omit(userDts.toJSON(), 'password')
                 return {'msg': 'okay', dUser}
             } else {
                 return {'msg': 'bad', 'cause':'Invalid password provided'}
@@ -42,15 +45,15 @@ export async function validateUsernameAndPassword ({username, password}: validat
 }
 
 // for creating a session to log the user in
-export async function loginUserService (details: DocumentDefinition<UserDocument>) {
+export async function loginUserService (details: DocumentDefinition<UserDocument>, req: Request) {
     // console.log(details)
     try {
         // validate the username and password
         const validation = await validateUsernameAndPassword(details)
         if (validation.msg === 'okay') {
-
+            const newSession = await createSession({userId: validation.dUser._id as string, userAgent: req.get('user-agent') || ''})
+            console.log(newSession)
         }
-        console.log(validation)
 
     } catch (err: any) {
         return {'msg':'bad', 'cause':err.message};
