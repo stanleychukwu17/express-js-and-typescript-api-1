@@ -43,5 +43,6 @@ interface refreshProps {
 }
 export async function createRefreshToken({session, options}: refreshProps) {
     const refreshToken = await sign(session, options );
+    return refreshToken
 }
   

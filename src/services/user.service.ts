@@ -69,12 +69,7 @@ export async function loginUserService (details: DocumentDefinition<UserDocument
         const refreshToken = await createRefreshToken({ session, options: {expiresIn: config.get("refreshTokenTtl")} })
 
         // send back refresh token and access token
-        console.log(user)
-        console.log(session)
-        console.log(accessToken)
-        console.log(refreshToken)
-
-
+        return {'msg':'okay', 'cause':'', accessToken, refreshToken}
     } catch (err: any) {
         return {'msg':'bad', 'cause':err.message};
     }
