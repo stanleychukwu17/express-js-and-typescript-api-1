@@ -3,6 +3,7 @@ import config from "config";
 
 const privateKey = config.get("privateKey") as string;
 
+// generates a jwt token based on details received
 export function sign(object: Object, options?: jwt.SignOptions | undefined) {
     return jwt.sign(object, privateKey, options);
 }

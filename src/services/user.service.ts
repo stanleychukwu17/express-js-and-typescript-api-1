@@ -50,20 +50,28 @@ export async function loginUserService (details: DocumentDefinition<UserDocument
     try {
         // validate the username and password
         const validation = await validateUsernameAndPassword(details)
-        if (validation.msg === 'okay') {
-            const newSession = await createSession({userId: validation.dUser._id as string, userAgent: req.get('user-agent') || ''})
-            console.log(newSession)
+        if (validation.msg != 'okay') {
+            return {'msg':'bad', 'cause':validation.cause};
         }
+
+        // since the validation was successful, we now have access to the user object
+        const {dUser: user} = validation
+
+        // create a session
+        const session = await createSession({userId: validation.dUser._id as string, userAgent: req.get('user-agent') || ''})
+        console.log(user, session)
+
+        // create an access token
+
+        // create a refresh token
+
+        // send back refresh token and access token
 
     } catch (err: any) {
         return {'msg':'bad', 'cause':err.message};
     }
 
-    // create a session
 
-    // create an access token
 
-    // create a refresh token
 
-    // send back refresh token and access token
 }

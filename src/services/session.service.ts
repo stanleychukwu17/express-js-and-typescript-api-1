@@ -5,7 +5,7 @@ import Session, {SessionDocument} from '../model/session.model'
 import {UserDocument} from "../model/user.model"
 import { sign, decode } from "../utils/jwt.utils";
 
-// creates a new session and save the session in the database
+// creates a new session for a user and save the session in the database
 type createProps = {
     userId: string,
     userAgent: string
@@ -16,6 +16,7 @@ export async function createSession({userId, userAgent}: createProps) {
 }
 
 
+// creates an access token
 interface accessProps {
     user: | Omit<UserDocument, "password"> | LeanDocument<Omit<UserDocument, "password">>
     session: | Omit<SessionDocument, "password"> | LeanDocument<Omit<SessionDocument, "password">>
@@ -23,8 +24,8 @@ interface accessProps {
 export function createAccessToken({user, session}: accessProps) {
     // Build and return the new access token
     const accessToken = sign(
-      { ...user, session: session._id },
-      { expiresIn: config.get("accessTokenTtl") } // 15 minutes
+        { ...user, session: session._id },
+        { expiresIn: config.get("accessTokenTtl") } // 15 minutes
     );
   
     return accessToken;
