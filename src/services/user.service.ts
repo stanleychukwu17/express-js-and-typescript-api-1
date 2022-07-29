@@ -2,9 +2,11 @@ import {Request} from 'express'
 import { DocumentDefinition } from "mongoose";
 import bcrypt from "bcrypt";
 import { omit } from "lodash";
+import config from "config";
+
+import { createAccessToken, createRefreshToken, createSession } from "./session.service";
 import Users, {UserDocument} from "../model/user.model";
 import log from "../logger";
-import { createSession } from "./session.service";
 
 // registers a new user
 export async function registerNewUserService (details: DocumentDefinition<UserDocument>) {
@@ -59,13 +61,19 @@ export async function loginUserService (details: DocumentDefinition<UserDocument
 
         // create a session
         const session = await createSession({userId: validation.dUser._id as string, userAgent: req.get('user-agent') || ''})
-        console.log(user, session)
 
         // create an access token
+        const accessToken = await createAccessToken({user, session});
 
         // create a refresh token
+        const refreshToken = await createRefreshToken({ session, options: {expiresIn: config.get("refreshTokenTtl")} })
 
         // send back refresh token and access token
+        console.log(user)
+        console.log(session)
+        console.log(accessToken)
+        console.log(refreshToken)
+
 
     } catch (err: any) {
         return {'msg':'bad', 'cause':err.message};

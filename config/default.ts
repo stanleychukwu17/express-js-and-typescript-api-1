@@ -5,6 +5,8 @@ export default {
     "saltWorkFactor":10,
     "accessTokenTtl": "15m",
     "refreshTokenTtl": "1y",
+    // the privateKey below was generated using google, just google "generate private key" and you'll find websites that you can generate
+    // private keys from, just copy and past your private key here
     "privateKey": `-----BEGIN RSA PRIVATE KEY-----
     MIICWwIBAAKBgQCQNBc4IP2ewViqE+ZHbnqGoCZFyAUtrxKmO4k/boSvBisJH6BX
     01ajpafM7c7f5PO+wAcGYIxiTQsv9ml2/cgnB6MWG/YYKDCfbWLNbpvQxYlUCu0f
